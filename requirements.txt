@@ -1,0 +1,7 @@
+lighter-v1-python
+httpx>=0.27
+websockets>=12
+pydantic>=2
+python-dotenv>=1
+structlog>=24
+pyyaml>=6
