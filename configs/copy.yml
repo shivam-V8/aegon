@@ -1,1 +1,26 @@
 # copy configuration
+leaderboard:
+  refresh_sec: 120         # slower refresh to reduce API load
+  lookback_blocks: 150
+  max_accounts: 100
+  rps: 0.5                 # requests per second cap for scanner (0.5 = 1 req / 2s)
+  follow_slots: 3
+  sort_by: "sharpe_30d"   # or "pnl_7d_pct"
+  selection:
+    min_equity_usdc: 50
+    min_trades_7d: 5
+    max_drawdown_30d_pct: 35
+
+copy_defaults:
+  copy_mode: "risk"
+  copy_param: 0.5
+  slippage_bps: 20
+  max_leverage: 5
+  max_positions: 3
+  markets_allow: []
+
+poll:
+  interval_sec: 10         # slower polling for signals
+
+alerts:
+  type: "console"

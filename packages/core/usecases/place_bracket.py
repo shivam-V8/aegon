@@ -1,10 +1,11 @@
-from ..models.order import OrderIntent
-from ..models.enums import *
+from decimal import Decimal
 from datetime import datetime
 
-def to_scaled_price(px: float) -> str:
-    # TODO: replace with per-instrument scale from data.markets (price_scale)
-    return str(int(px * 1_000_000))
+from ..models.order import OrderIntent
+from ..models.enums import *
+
+def _decimal_str(value: float) -> str:
+    return format(Decimal(str(value)).normalize(), "f")
 
 def coi(prefix: str) -> str:
     return f"{prefix}-{int(datetime.utcnow().timestamp()*1000)}"
@@ -21,7 +22,7 @@ def build_create_orders(intent: OrderIntent) -> list[dict]:
         "time_in_force": intent.tif
     }
     if intent.entry_px is not None:
-        entry["price"] = to_scaled_price(intent.entry_px)
+        entry["price"] = _decimal_str(intent.entry_px)
     txs.append(entry)
 
     if intent.tp_px is not None:
@@ -30,7 +31,7 @@ def build_create_orders(intent: OrderIntent) -> list[dict]:
             "side": "SELL" if intent.side=="BUY" else "BUY",
             "order_type": ORDER_TYPE_TAKE_PROFIT,
             "base_amount": str(intent.base_amount),
-            "price": to_scaled_price(intent.tp_px),
+            "price": _decimal_str(intent.tp_px),
             "client_order_index": coi("tp"),
         })
 
@@ -40,7 +41,7 @@ def build_create_orders(intent: OrderIntent) -> list[dict]:
             "side": "SELL" if intent.side=="BUY" else "BUY",
             "order_type": ORDER_TYPE_STOP_LOSS,
             "base_amount": str(intent.base_amount),
-            "price": to_scaled_price(intent.stop_px),
+            "price": _decimal_str(intent.stop_px),
             "client_order_index": coi("sl"),
         })
 

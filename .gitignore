@@ -50,6 +50,7 @@ Thumbs.db
 # Config files with sensitive credentials
 configs/.env.testnet
 configs/.env.mainnet
+configs/.env.mainnet.example
 configs/*.env
 configs/local.*
 configs/production.*

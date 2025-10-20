@@ -66,8 +66,8 @@ python apps/trader/main.py --network testnet account --json
 python apps/trader/main.py --network testnet open-orders
 
 # Place a bracket order
-python apps/trader/main.py --network testnet place \
-  --market HYPE-USDC --side BUY --size 10 \
+python apps/trader/main.py --network mainnet place \
+  --market BTC --side BUY --size 2 \
   --stop 20.0 --tp 25.0 --lev 2.0
 
 # Close a position
